@@ -16,8 +16,11 @@ import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import net.minecraft.world.entity.LivingEntity;
 
 /** Curios-only adapter: slot filtering and callbacks, with no doll-specific effects. */
 public final class LoadedCuriosBridge implements CuriosBridge {
@@ -51,7 +54,7 @@ public final class LoadedCuriosBridge implements CuriosBridge {
     }
 
     private void changed(SlotContext slot, ItemStack replacement) {
-        if (!slot.cosmetic() && slot.entity() instanceof ServerPlayer player) {
+        if (isFunctionalSlot(slot.identifier()) && !slot.cosmetic() && slot.entity() instanceof ServerPlayer player) {
             DollRuntime.update(player, equipment(player, slot, replacement));
         }
     }
@@ -65,6 +68,7 @@ public final class LoadedCuriosBridge implements CuriosBridge {
         Map<String, EquippedDoll> equipment = new LinkedHashMap<>();
         CuriosApi.getCuriosInventory(player).ifPresent(inventory -> {
             for (var entry : inventory.getCurios().entrySet()) {
+                if (!isFunctionalSlot(entry.getKey())) continue;
                 var slots = entry.getValue().getStacks();
                 for (int index = 0; index < slots.getSlots(); index++) {
                     if (!inventory.isSlotActive(entry.getKey(), index)) continue;
@@ -73,11 +77,35 @@ public final class LoadedCuriosBridge implements CuriosBridge {
                             && changed.index() == index ? replacement : slots.getStackInSlot(index);
                     if (!(stack.getItem() instanceof ItemDoll item)) continue;
                     var doll = ((BlockDoll) item.getBlock()).get_doll();
-                    equipment.compute(doll.id(), (k, previous) -> new EquippedDoll(doll, stack,
-                            previous == null ? 1 : previous.count() + 1));
+                    var stacks = new ArrayList<ItemStack>();
+                    if (equipment.containsKey(doll.id())) stacks.addAll(equipment.get(doll.id()).stacks());
+                    stacks.add(stack);
+                    equipment.put(doll.id(), new EquippedDoll(doll, stacks));
                 }
             }
         });
         return equipment;
+    }
+
+    private static boolean isFunctionalSlot(String identifier) {
+        return "head".equals(identifier) || "doll".equals(identifier);
+    }
+
+    @Override
+    public List<ItemStack> activeStacks(LivingEntity entity, String dollId) {
+        List<ItemStack> result = new ArrayList<>();
+        CuriosApi.getCuriosInventory(entity).ifPresent(inventory -> {
+            for (var entry : inventory.getCurios().entrySet()) {
+                if (!isFunctionalSlot(entry.getKey())) continue;
+                var slots = entry.getValue().getStacks();
+                for (int index = 0; index < slots.getSlots(); index++) {
+                    if (!inventory.isSlotActive(entry.getKey(), index)) continue;
+                    ItemStack stack = slots.getStackInSlot(index);
+                    if (stack.getItem() instanceof ItemDoll item
+                            && ((BlockDoll) item.getBlock()).get_doll().id().equals(dollId)) result.add(stack);
+                }
+            }
+        });
+        return result;
     }
 }

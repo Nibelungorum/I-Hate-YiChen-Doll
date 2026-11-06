@@ -10,6 +10,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
@@ -67,6 +68,12 @@ public class RecipesGenerator extends RecipeProvider {
         this._p_recipeOutput = p_recipeOutput;
         this._holderLookup = holderLookup;
         standardRecipe(Items.DIAMOND,"howxu");
+        standardRecipe(Items.ENDER_EYE,"qingjiao");
+        standardRecipe(Items.REDSTONE,"yuanxi_19");
+        standardRecipe(Items.COOKED_PORKCHOP, "m_xm_");
+        standardRecipe(Items.PORKCHOP,"m_xm_free");
+        standardRecipe(ModItems.ITEMS.get("howxu").get(),"budai");
+        standardRecipe(Ingredient.of(ItemTags.create(ResourceLocation.parse("minecraft:flowers"))),"budai_see_u");
         // ModItems.ITEMS.forEach((name, holder) -> {
         //     if ("m_xm_".equals(name)) return;
         //     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, holder.get())
@@ -95,6 +102,27 @@ public class RecipesGenerator extends RecipeProvider {
         //         .save(p_recipeOutput, Res.rl("m_xm_"));
     }
 
+    private void standardRecipe(Ingredient coreMaterial, String id) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.ITEMS.get(id).get())
+                .group(IHateYiChenDoll.MOD_ID)
+                .pattern("EAE")
+                .pattern("ABA")
+                .pattern("CAC")
+                .define('E', Ingredient.of(ItemTags.create(ResourceLocation.parse("minecraft:flowers"))))
+                .define('A', Ingredient.of(ItemTags.create(ResourceLocation.parse("minecraft:wool"))))
+                .define('B', Ingredient.of(ItemTags.create(ResourceLocation.parse("minecraft:planks"))))
+                .define('C', coreMaterial)
+                .unlockedBy("has_diamond", has(Items.DIAMOND))
+                .save(this._p_recipeOutput);
+
+        // A fresh result stack drops every input component patch, restoring item defaults.
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.ITEMS.get(id).get())
+                .group(IHateYiChenDoll.MOD_ID)
+                .requires(ModItems.ITEMS.get(id).get())
+                .unlockedBy("has_" + id, has(ModItems.ITEMS.get(id).get()))
+                .save(this._p_recipeOutput, Res.rl(id + "_clear_data"));
+    }
+
     private void standardRecipe(ItemLike coreMaterial, String id) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.ITEMS.get(id).get())
                 .group(IHateYiChenDoll.MOD_ID)
@@ -105,8 +133,14 @@ public class RecipesGenerator extends RecipeProvider {
                 .define('A', Ingredient.of(ItemTags.create(ResourceLocation.parse("minecraft:wool"))))
                 .define('B', Ingredient.of(ItemTags.create(ResourceLocation.parse("minecraft:planks"))))
                 .define('C', coreMaterial)
-                .unlockedBy("has_egg", has(Items.DIAMOND))
+                .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .save(this._p_recipeOutput);
-        ;
+
+        // A fresh result stack drops every input component patch, restoring item defaults.
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.ITEMS.get(id).get())
+                .group(IHateYiChenDoll.MOD_ID)
+                .requires(ModItems.ITEMS.get(id).get())
+                .unlockedBy("has_" + id, has(ModItems.ITEMS.get(id).get()))
+                .save(this._p_recipeOutput, Res.rl(id + "_clear_data"));
     }
 }

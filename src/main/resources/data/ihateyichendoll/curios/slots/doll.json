@@ -1,0 +1,7 @@
+{
+  "size": 3,
+  "operation": "SET",
+  "add_cosmetic": false,
+  "icon": "curios:slot/empty_curio_slot",
+  "validators": ["ihateyichendoll:item_doll"]
+}

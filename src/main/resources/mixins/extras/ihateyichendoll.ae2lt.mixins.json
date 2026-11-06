@@ -5,7 +5,6 @@
   "plugin": "github.ihatechpack.yichendoll.mixin.compat.LightningTechMixinPlugin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "LivingEntityMixin",
     "ServerPlayerMixin",
     "RailgunFireServiceMixin",
     "OverloadExecutionServiceMixin",

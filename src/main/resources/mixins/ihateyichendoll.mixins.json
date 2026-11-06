@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "github.ihatechpack.yichendoll.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "common.PlayerFlightMixin",
+    "common.LivingEntityFlightMixin",
+    "common.ItemStackDurabilityMixin",
+    "common.MaxHealthAttributeMixin"
+  ],
+  "client": [
+    "client.CustomHeadLayerMixin",
+    "client.LocalPlayerFlightMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

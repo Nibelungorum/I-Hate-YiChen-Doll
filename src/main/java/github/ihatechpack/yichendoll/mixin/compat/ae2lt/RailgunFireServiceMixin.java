@@ -2,7 +2,7 @@ package github.ihatechpack.yichendoll.mixin.compat.ae2lt;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import github.ihatechpack.yichendoll.common.doll.behavior.MXmDollBehavior;
+import github.ihatechpack.yichendoll.common.doll.behavior.MXmFreeDollBehavior;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,6 +14,6 @@ public abstract class RailgunFireServiceMixin {
             method = "applyAll(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/server/level/ServerPlayer;Ljava/util/List;Lcom/moakiee/ae2lt/logic/railgun/DamageContext;Lnet/minecraft/world/item/ItemStack;Lcom/moakiee/ae2lt/item/railgun/RailgunChargeTier;Lcom/moakiee/ae2lt/logic/railgun/RailgunFireService$ExecutionScope;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
     private static boolean yichendoll$ignoreRailgunDamage(LivingEntity target, DamageSource source, float amount, Operation<Boolean> original) {
-        return !MXmDollBehavior.isWearing(target) && original.call(target, source, amount);
+        return !MXmFreeDollBehavior.isWearing(target) && original.call(target, source, amount);
     }
 }

@@ -7,6 +7,10 @@ import github.ihatechpack.yichendoll.registry.ModBlocks;
 import github.ihatechpack.yichendoll.registry.ModItems;
 import github.ihatechpack.yichendoll.datagen.DataGenRegistration;
 import github.ihatechpack.yichendoll.integration.curios.CuriosBridge;
+import github.ihatechpack.yichendoll.integration.ae2.AE2Bridge;
+import github.ihatechpack.yichendoll.common.doll.DollEnergy;
+import github.ihatechpack.yichendoll.registry.ModDataComponents;
+import github.ihatechpack.yichendoll.registry.ModAttributes;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -27,13 +31,18 @@ public final class IHateYiChenDoll {
         // single instance mode
         instance = this;
         // common reg
+        ModDataComponents.REGISTER.register(modBus);
+        ModAttributes.REGISTER.register(modBus);
         ModBlocks.register(modBus);
         ModItems.register(modBus);
         ModCreativeTab.REGISTER.register(modBus);
         ModSounds.REGISTER.register(modBus);
         DataGenRegistration.init(modBus);
-        modBus.addListener((FMLCommonSetupEvent event) ->
-                event.enqueueWork(() -> CuriosBridge.get().commonSetup()));
+        modBus.addListener((FMLCommonSetupEvent event) -> event.enqueueWork(() -> {
+            CuriosBridge.get().commonSetup();
+            AE2Bridge.get().initialize();
+        }));
         modBus.addListener(CuriosBridge.get()::registerCapabilities);
+        modBus.addListener(DollEnergy::registerCapabilities);
     }
 }

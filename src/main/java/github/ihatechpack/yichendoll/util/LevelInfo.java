@@ -39,9 +39,9 @@ public class LevelInfo {
 
     public enum Level{
         God("god", ChatFormatting.GOLD),
-        Streamer("streamer",ChatFormatting.AQUA),
+        Streamer("streamer",ChatFormatting.DARK_PURPLE),
         Kernel("kernel",ChatFormatting.LIGHT_PURPLE),
-        Fan("fan",ChatFormatting.GREEN);
+        Fan("fan",ChatFormatting.GRAY);
 
 
         final String id;

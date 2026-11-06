@@ -2,6 +2,7 @@ package github.ihatechpack.yichendoll.common.item;
 
 import github.ihatechpack.yichendoll.IHateYiChenDoll;
 import github.ihatechpack.yichendoll.common.block.BlockDoll;
+import github.ihatechpack.yichendoll.common.doll.DollTooltips;
 import github.ihatechpack.yichendoll.util.LevelInfo;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -28,5 +29,6 @@ public class ItemDoll extends BlockItem {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         ((BlockDoll) this.getBlock()).get_doll().appendHoverText(tooltipComponents);
+        DollTooltips.append(stack, tooltipComponents);
     }
 }

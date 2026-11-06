@@ -1,6 +1,6 @@
 package github.ihatechpack.yichendoll.integration.ae2lt;
 
-import github.ihatechpack.yichendoll.common.doll.behavior.MXmDollBehavior;
+import github.ihatechpack.yichendoll.common.doll.behavior.MXmFreeDollBehavior;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,7 +21,7 @@ public final class CelestweaveBypass {
     private record Attack(LivingEntity target, boolean piercing, Attack previous) {}
 
     public static boolean isPiercing(LivingEntity target, DamageSource source) {
-        return source.getEntity() != target && MXmDollBehavior.isWearing(source.getEntity());
+        return source.getEntity() != target && MXmFreeDollBehavior.isWearing(source.getEntity());
     }
 
     public static boolean shouldBypass(LivingEntity target) {

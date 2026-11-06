@@ -13,6 +13,9 @@ import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.HashMap;
+import java.util.List;
+import net.minecraft.world.item.ItemStack;
+import github.ihatechpack.yichendoll.integration.ae2.AE2Bridge;
 import java.util.Map;
 import java.util.UUID;
 
@@ -32,6 +35,12 @@ public final class DollRuntime {
         EquipmentState<EquippedDoll> state = PLAYERS.get(entity.getUUID());
         EquippedDoll equipped = state == null ? null : state.snapshot().get(dollId);
         return equipped == null ? 0 : equipped.count();
+    }
+
+    public static List<ItemStack> stacks(ServerPlayer player, String dollId) {
+        EquipmentState<EquippedDoll> state = PLAYERS.get(player.getUUID());
+        EquippedDoll equipped = state == null ? null : state.snapshot().get(dollId);
+        return equipped == null ? List.of() : equipped.stacks();
     }
 
     /** Called by the equipment bridge, including before Curios commits a changed slot. */
@@ -78,21 +87,28 @@ public final class DollRuntime {
 
     @SubscribeEvent
     public static void onClone(PlayerEvent.Clone event) {
-        forget(event.getOriginal().getUUID());
+        forget(event.getOriginal());
     }
 
     @SubscribeEvent
     public static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
-        forget(event.getEntity().getUUID());
+        forget(event.getEntity());
     }
 
-    private static void forget(UUID id) {
-        EquipmentState<EquippedDoll> state = PLAYERS.remove(id);
-        if (state != null) state.clear();
+    private static void forget(Player player) {
+        EquipmentState<EquippedDoll> state = PLAYERS.remove(player.getUUID());
+        if (state == null) return;
+        if (player instanceof ServerPlayer serverPlayer) {
+            state.snapshot().values().forEach(equipped ->
+                    equipped.doll().behavior().onUnequip(equipped.context(serverPlayer)));
+        }
+        state.clear();
     }
 
     @SubscribeEvent
     public static void onServerStopped(ServerStoppedEvent event) {
         PLAYERS.clear();
+        DollFlight.clear();
+        AE2Bridge.get().clear();
     }
 }

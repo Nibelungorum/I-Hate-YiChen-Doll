@@ -4,18 +4,19 @@ import github.ihatechpack.yichendoll.registry.DollRegistery;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
-/** Aggregated active slots for one doll type; never retains a player entity. */
-public record EquippedDoll(DollRegistery.Doll doll, ItemStack stack, int count) {
+import java.util.List;
+
+/** Immutable slot membership with live item data for charging and changing ME bindings. */
+public record EquippedDoll(DollRegistery.Doll doll, List<ItemStack> stacks) {
     public EquippedDoll {
-        stack = stack.copy();
+        stacks = List.copyOf(stacks);
     }
 
-    @Override
-    public ItemStack stack() {
-        return stack.copy();
+    public int count() {
+        return stacks.size();
     }
 
     public DollContext context(ServerPlayer player) {
-        return new DollContext(player, doll, stack(), count);
+        return new DollContext(player, doll, stacks);
     }
 }

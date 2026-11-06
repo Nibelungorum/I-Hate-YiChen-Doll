@@ -20,7 +20,7 @@ public class ModCreativeTab {
 
     public static DeferredHolder<CreativeModeTab,CreativeModeTab> MOD_TAB = REGISTER.register(IHateYiChenDoll.MOD_ID, () -> CreativeModeTab.builder()
             .title(Component.translatable("item_group.ihateyichendoll.name"))
-            .icon(() -> BuiltInRegistries.ITEM.get(Res.rl("howxu")).getDefaultInstance())
+            .icon(() -> BuiltInRegistries.ITEM.get(Res.rl("yuanxi_19")).getDefaultInstance())
             .displayItems((par, output) -> {
                 ModItems.ITEMS.forEach((_s,itemDeferredHolder) -> {output.accept(itemDeferredHolder.get());});
             }).build());

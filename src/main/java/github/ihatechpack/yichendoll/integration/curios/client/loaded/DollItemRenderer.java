@@ -8,21 +8,13 @@ import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
-/**
- * 依据原版{@link CustomHeadLayer CustomHeadLayer}书写而来，仅供玩家渲染使用
- */
-@OnlyIn(Dist.CLIENT)
+/** One visible Curios head doll, preferred over a doll in the vanilla helmet slot. */
 public class DollItemRenderer<T extends LivingEntity, M extends EntityModel<T> & HeadedModel> extends RenderLayer<T, M> {
     private final ItemInHandRenderer itemInHandRenderer;
 
@@ -31,45 +23,33 @@ public class DollItemRenderer<T extends LivingEntity, M extends EntityModel<T> &
         this.itemInHandRenderer = itemInHandRenderer;
     }
 
-    public static void translateToHead(PoseStack poseStack) {
-        poseStack.translate(0.0F, -0.25F, 0.0F);
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-        poseStack.scale(0.625F, -0.625F, -0.625F);
+    public static ItemStack headDoll(LivingEntity entity) {
+        return CuriosApi.getCuriosInventory(entity).map(inventory -> {
+            var head = inventory.getCurios().get("head");
+            if (head == null || !head.isVisible()) return ItemStack.EMPTY;
+            for (int i = 0; i < head.getStacks().getSlots(); i++) {
+                if (!inventory.isSlotActive("head", i) || i >= head.getRenders().size()
+                        || !head.getRenders().get(i)) continue;
+                ItemStack stack = head.getCosmeticStacks().getStackInSlot(i);
+                if (stack.isEmpty()) stack = head.getStacks().getStackInSlot(i);
+                if (stack.getItem() instanceof ItemDoll) return stack;
+            }
+            return ItemStack.EMPTY;
+        }).orElse(ItemStack.EMPTY);
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource bufferIn, int packedLightIn, T livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        CuriosApi.getCuriosInventory(livingEntity)
-                .ifPresent(handler -> handler.getCurios().forEach((id, stacksHandler) -> {
-                    if (stacksHandler.isVisible() && "head".equals(stacksHandler.getIdentifier())) {
-                        IDynamicStackHandler stackHandler = stacksHandler.getStacks();
-                        IDynamicStackHandler cosmeticStacksHandler = stacksHandler.getCosmeticStacks();
-
-                        for (int i = 0; i < stackHandler.getSlots(); i++) {
-                            ItemStack stack = cosmeticStacksHandler.getStackInSlot(i);
-                            NonNullList<Boolean> renderStates = stacksHandler.getRenders();
-                            boolean renderable = renderStates.size() > i && renderStates.get(i);
-
-                            if (stack.isEmpty() && renderable) {
-                                stack = stackHandler.getStackInSlot(i);
-                            }
-
-                            if (!stack.isEmpty()) {
-                                rendererDollItem(stack, livingEntity, poseStack, bufferIn, packedLightIn);
-                            }
-                        }
-                    }
-                }));
-    }
-
-    private <LE extends LivingEntity> void rendererDollItem(ItemStack itemStack, LE livingEntity, PoseStack poseStack, MultiBufferSource multiBufferSource, int light) {
-        if (itemStack.getItem() instanceof ItemDoll itemDoll) {
-            poseStack.pushPose();
-            poseStack.scale(1.0f, 1.0f, 1.0f);
-            this.getParentModel().getHead().translateAndRotate(poseStack);
-            translateToHead(poseStack);
-            this.itemInHandRenderer.renderItem(livingEntity, itemStack, ItemDisplayContext.HEAD, false, poseStack, multiBufferSource, light);
-            poseStack.popPose();
-        }
+    public void render(PoseStack pose, MultiBufferSource buffer, int light, T entity,
+                       float limbSwing, float limbSwingAmount, float partialTicks,
+                       float ageInTicks, float netHeadYaw, float headPitch) {
+        ItemStack stack = headDoll(entity);
+        if (stack.isEmpty()) return;
+        pose.pushPose();
+        this.getParentModel().getHead().translateAndRotate(pose);
+        pose.translate(0, -0.25, 0);
+        pose.mulPose(Axis.YP.rotationDegrees(180));
+        pose.scale(0.625F, -0.625F, -0.625F);
+        itemInHandRenderer.renderItem(entity, stack, ItemDisplayContext.HEAD, false, pose, buffer, light);
+        pose.popPose();
     }
 }

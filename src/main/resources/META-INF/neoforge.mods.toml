@@ -52,6 +52,9 @@ Welcome to watch the live stream of YiChen at Douyin.com!
 
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
 [[mixins]]
+config="mixins/${mod_id}.mixins.json"
+
+[[mixins]]
 config="mixins/extras/${mod_id}.ae2lt.mixins.json"
 
 # The [[accessTransformers]] block allows you to declare where your AT file is.

@@ -133,6 +133,8 @@ dependencies {
     // Optional APIs are needed to compile, but are not published as required dependencies.
     compileOnly "curse.maven:curios-309927:6529130"
     compileOnly "curse.maven:jade-324717:7428884"
+    compileOnly "maven.modrinth:XxWD5pD3:KDnFUmMm"
+    compileOnly "maven.modrinth:oMgZ004U:4x40hq9D"
 
     // Use -PwithoutOptionalIntegrations to verify loading without optional mods.
     if (!providers.gradleProperty('withoutOptionalIntegrations').isPresent()) {
@@ -140,6 +142,7 @@ dependencies {
         localRuntime "curse.maven:curios-309927:6529130"
         localRuntime "curse.maven:jade-324717:7428884"
         localRuntime "curse.maven:jei-238222:7391682"
+        localRuntime "maven.modrinth:wQfMUdZT:us0gze50"
 
         // Optional Lightning Tech integration and its dependencies, available in development runs.
         localRuntime "maven.modrinth:ArHeh5Fz:GGx4RqQt"

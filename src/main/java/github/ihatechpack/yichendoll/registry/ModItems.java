@@ -4,6 +4,8 @@ package github.ihatechpack.yichendoll.registry;
 import github.ihatechpack.yichendoll.IHateYiChenDoll;
 import github.ihatechpack.yichendoll.Res;
 import github.ihatechpack.yichendoll.common.item.ItemDoll;
+import github.ihatechpack.yichendoll.common.item.MeNetworkDollItem;
+import github.ihatechpack.yichendoll.common.item.EnergyDollItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -24,7 +26,7 @@ public class ModItems {
 
     public static void register(IEventBus bus) {
         DollRegistery.DOLLS.forEach(doll -> {
-            ITEMS.put(doll.id(), REGISTER.register(doll.id(),()-> new ItemDoll(ModBlocks.BLOCKS.get(doll.id()).get(),doll.level())));
+            ITEMS.put(doll.id(), REGISTER.register(doll.id(), () -> createDoll(doll)));
         });
         // Arrays.stream(Res.howxu).forEach(str -> {
         //     ITEMS.put(str, REGISTER.register(str, () -> new ItemDoll(ModBlocks.BLOCKS.get(str).get(),2,3)));
@@ -42,5 +44,14 @@ public class ModItems {
         //     ITEMS.put(str, REGISTER.register(str, () -> new ItemDoll(ModBlocks.BLOCKS.get(str).get(),2,1)));
         // });
         REGISTER.register(bus);
+    }
+
+    private static ItemDoll createDoll(DollRegistery.Doll doll) {
+        var block = ModBlocks.BLOCKS.get(doll.id()).get();
+        return switch (doll.id()) {
+            case "m_xm_", "budai", "budai_see_u", "yuanxi_19" -> new MeNetworkDollItem(block, doll.level());
+            case "howxu", "qingjiao" -> new EnergyDollItem(block, doll.level());
+            default -> new ItemDoll(block, doll.level());
+        };
     }
 }
