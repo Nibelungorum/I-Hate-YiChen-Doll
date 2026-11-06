@@ -1,8 +1,8 @@
-package github.ihatechpack.yichendoll.mixin.lightningtech;
+package github.ihatechpack.yichendoll.mixin.compat.ae2lt;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import github.ihatechpack.yichendoll.integration.lightningtech.CelestweaveBypass;
+import github.ihatechpack.yichendoll.integration.ae2lt.CelestweaveBypass;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,5 +1,7 @@
 package github.ihatechpack.yichendoll.registry;
 
+import github.ihatechpack.yichendoll.api.doll.DollBehavior;
+import github.ihatechpack.yichendoll.common.doll.behavior.MXmDollBehavior;
 import github.ihatechpack.yichendoll.util.LevelInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -21,7 +23,12 @@ public class DollRegistery {
 
     static {
         addGod("howxu");
-        addStreamer("m_xm_");
+        addStreamer("m_xm_free");
+        addStreamer("m_xm_", MXmDollBehavior.INSTANCE);
+        addStreamer("budai_see_u");
+        addStreamer("budai");
+        addStreamer("qingjiao");
+        addKernel("yuanxi_19");
     }
 
     private static void addGod(String id) {
@@ -32,10 +39,14 @@ public class DollRegistery {
     }
 
     private static void addStreamer(String id) {
+        addStreamer(id, DollBehavior.NONE);
+    }
+
+    private static void addStreamer(String id, DollBehavior behavior) {
         DOLLS.add(new Doll(id, LevelInfo.Level.Streamer,list -> {
             list.add(Component.translatable(prefix_tip + id + ".0").withStyle(LevelInfo.getColor(LevelInfo.Level.Streamer)));
             list.add(Component.translatable(prefix_tip + id + ".1").withStyle(LevelInfo.getColor(LevelInfo.Level.Streamer)));
-        }));
+        }, behavior));
     }
 
     private static void addKernel(String id) {
@@ -51,7 +62,11 @@ public class DollRegistery {
         }));
     }
 
-    public record Doll(String id, LevelInfo.Level level, Descriptaion desc) {
+    public record Doll(String id, LevelInfo.Level level, Descriptaion desc, DollBehavior behavior) {
+        public Doll(String id, LevelInfo.Level level, Descriptaion desc) {
+            this(id, level, desc, DollBehavior.NONE);
+        }
+
         public void appendHoverText(List<Component> tooltipComponents) {
             desc.appendHoverText(tooltipComponents);
         }

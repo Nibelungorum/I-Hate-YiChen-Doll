@@ -1,4 +1,4 @@
-package github.ihatechpack.yichendoll.integration.jade;
+package github.ihatechpack.yichendoll.integration.jade.loaded;
 
 import github.ihatechpack.yichendoll.Res;
 import github.ihatechpack.yichendoll.common.block.BlockDoll;

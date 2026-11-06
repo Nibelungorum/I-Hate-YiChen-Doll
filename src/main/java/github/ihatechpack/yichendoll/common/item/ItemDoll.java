@@ -16,7 +16,7 @@ import java.util.List;
 public class ItemDoll extends BlockItem {
 
     public ItemDoll(Block block, LevelInfo.Level level) {
-        super(block, new Properties().rarity(LevelInfo.getRarity(level)));
+        super(block, new Properties().rarity(LevelInfo.getRarity(level)).stacksTo(1));
     }
 
     @Override

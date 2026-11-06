@@ -6,7 +6,8 @@ import github.ihatechpack.yichendoll.registry.ModSounds;
 import github.ihatechpack.yichendoll.registry.ModBlocks;
 import github.ihatechpack.yichendoll.registry.ModItems;
 import github.ihatechpack.yichendoll.datagen.DataGenRegistration;
-import github.ihatechpack.yichendoll.integration.curios.core.CuriosExtension;
+import github.ihatechpack.yichendoll.integration.curios.CuriosBridge;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import org.slf4j.Logger;
@@ -31,9 +32,8 @@ public final class IHateYiChenDoll {
         ModCreativeTab.REGISTER.register(modBus);
         ModSounds.REGISTER.register(modBus);
         DataGenRegistration.init(modBus);
-        // registry jade
-        // registry curios
-        modBus.addListener(CuriosExtension::commonSetup);
-        modBus.addListener(CuriosExtension::registerDollCapabilities);
+        modBus.addListener((FMLCommonSetupEvent event) ->
+                event.enqueueWork(() -> CuriosBridge.get().commonSetup()));
+        modBus.addListener(CuriosBridge.get()::registerCapabilities);
     }
 }

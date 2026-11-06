@@ -1,4 +1,4 @@
-package github.ihatechpack.yichendoll.integration.curios.client;
+package github.ihatechpack.yichendoll.integration.curios.client.loaded;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

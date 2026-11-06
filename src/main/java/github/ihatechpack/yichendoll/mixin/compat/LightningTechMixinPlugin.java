@@ -1,4 +1,4 @@
-package github.ihatechpack.yichendoll.mixin;
+package github.ihatechpack.yichendoll.mixin.compat;
 
 import net.neoforged.fml.loading.LoadingModList;
 import org.objectweb.asm.tree.ClassNode;
@@ -13,7 +13,8 @@ public final class LightningTechMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void onLoad(String mixinPackage) {
-        lightningTechLoaded = LoadingModList.get().getModFileById("ae2lt") != null;
+        LoadingModList mods = LoadingModList.get();
+        lightningTechLoaded = mods != null && mods.getModFileById("ae2lt") != null;
     }
 
     @Override

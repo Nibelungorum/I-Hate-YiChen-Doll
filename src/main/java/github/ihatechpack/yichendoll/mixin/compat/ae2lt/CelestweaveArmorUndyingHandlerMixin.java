@@ -1,6 +1,6 @@
-package github.ihatechpack.yichendoll.mixin.lightningtech;
+package github.ihatechpack.yichendoll.mixin.compat.ae2lt;
 
-import github.ihatechpack.yichendoll.integration.lightningtech.CelestweaveBypass;
+import github.ihatechpack.yichendoll.integration.ae2lt.CelestweaveBypass;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
