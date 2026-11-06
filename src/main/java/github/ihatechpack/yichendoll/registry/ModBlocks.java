@@ -2,12 +2,13 @@ package github.ihatechpack.yichendoll.registry;
 
 import github.ihatechpack.yichendoll.IHateYiChenDoll;
 import github.ihatechpack.yichendoll.Res;
-import github.ihatechpack.yichendoll.common.block.Doll;
+import github.ihatechpack.yichendoll.common.block.BlockDoll;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -20,21 +21,26 @@ public class ModBlocks {
     public static final LinkedHashMap<String, DeferredHolder<Block,Block>> BLOCKS = new LinkedHashMap<>();
 
     public static void register(IEventBus bus) {
-        Arrays.stream(Res.howxu).forEach(str -> {
-            BLOCKS.put(str,REGISTER.register(str,() -> new Doll(str)));
+
+        DollRegistery.DOLLS.forEach(doll -> {
+            BLOCKS.put(doll.id(), REGISTER.register(doll.id(), () -> new BlockDoll(doll)));
         });
-        Arrays.stream(Res.hualeibao).forEach(str -> {
-            BLOCKS.put(str,REGISTER.register(str,() -> new Doll(str)));
-        });
-        Arrays.stream(Res.yichens).forEach(str -> {
-            BLOCKS.put(str,REGISTER.register(str,() -> new Doll(str)));
-        });
-        Arrays.stream(Res.tech_guys).forEach(str -> {
-            BLOCKS.put(str,REGISTER.register(str,() -> new Doll(str)));
-        });
-        Arrays.stream(Res.specials).forEach(str -> {
-            BLOCKS.put(str,REGISTER.register(str,() -> new Doll(str)));
-        });
+
+        // Arrays.stream(Res.howxu).forEach(str -> {
+        //     BLOCKS.put(str,REGISTER.register(str,() -> new BlockDoll(str)));
+        // });
+        // Arrays.stream(Res.hualeibao).forEach(str -> {
+        //     BLOCKS.put(str,REGISTER.register(str,() -> new BlockDoll(str)));
+        // });
+        // Arrays.stream(Res.yichens).forEach(str -> {
+        //     BLOCKS.put(str,REGISTER.register(str,() -> new BlockDoll(str)));
+        // });
+        // Arrays.stream(Res.tech_guys).forEach(str -> {
+        //     BLOCKS.put(str,REGISTER.register(str,() -> new BlockDoll(str)));
+        // });
+        // Arrays.stream(Res.specials).forEach(str -> {
+        //     BLOCKS.put(str,REGISTER.register(str,() -> new BlockDoll(str)));
+        // });
         REGISTER.register(bus);
     }
 }

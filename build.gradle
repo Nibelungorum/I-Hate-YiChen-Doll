@@ -19,6 +19,10 @@ group = mod_group_id
 repositories {
     // Add here additional repositories if required by some of the dependencies below.
     maven {
+        url = uri("https://api.modrinth.com/maven")
+        content { includeGroup "maven.modrinth" }
+    }
+    maven {
         url = uri("https://cursemaven.com")
         name = name("Curse Maven")
     }
@@ -57,7 +61,6 @@ runs {
     client {
         // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
         systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        arguments.addAll '--username', "yichen_mm", '--uuid', "b9667ee0-736f-4b3e-99c6-604423773221"
     }
 
     server {
@@ -136,6 +139,15 @@ dependencies {
     // implementation "curse.maven:prism-lib-638111:6372979"
     // jei
     runtimeOnly "curse.maven:jei-238222:7391682"
+
+    // Optional Lightning Tech integration, available in development runs.
+    localRuntime "maven.modrinth:ArHeh5Fz:GGx4RqQt"
+    localRuntime "maven.modrinth:oMgZ004U:4x40hq9D"
+    localRuntime "maven.modrinth:XxWD5pD3:KDnFUmMm"
+    localRuntime "maven.modrinth:Ce6I4WUE:5KzzycBT"
+    localRuntime "maven.modrinth:M5jhzZXH:i3H7uX2O"
+    localRuntime "maven.modrinth:Ck4E7v7R:QeYKsstN"
+    localRuntime "maven.modrinth:UhW5uCKw:pfbmdJ3b"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -189,6 +201,16 @@ publishing {
                 username = System.getenv("MAVEN_USERNAME")
                 password = System.getenv("MAVEN_PASSWORD")
             }
+        }
+    }
+}
+
+tasks.withType(JavaExec).configureEach {
+    if (name == 'runClient') {
+        doFirst { task ->
+            def profileId = UUID.randomUUID()
+            task.args '--username', "dev_${profileId.toString().substring(0, 8)}",
+                    '--uuid', profileId.toString()
         }
     }
 }

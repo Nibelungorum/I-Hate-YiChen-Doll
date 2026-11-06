@@ -1,6 +1,7 @@
-package github.ihatechpack.yichendoll;
+package github.ihatechpack.yichendoll.client;
 
-import github.ihatechpack.yichendoll.integration.curios.CuriosExtension;
+import github.ihatechpack.yichendoll.IHateYiChenDoll;
+import github.ihatechpack.yichendoll.integration.curios.core.CuriosExtension;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

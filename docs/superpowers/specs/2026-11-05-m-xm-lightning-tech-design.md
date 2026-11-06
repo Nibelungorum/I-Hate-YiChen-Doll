@@ -19,6 +19,8 @@
 - AE2：`maven.modrinth:XxWD5pD3:KDnFUmMm`
 - Mekanism：`maven.modrinth:Ce6I4WUE:5KzzycBT`
 - 闪电科技前置：`maven.modrinth:M5jhzZXH:i3H7uX2O`
+- GuideME：`maven.modrinth:Ck4E7v7R:QeYKsstN`
+- Glodium：`maven.modrinth:UhW5uCKw:pfbmdJ3b`
 
 采用可选兼容集成：开发环境加载指定依赖；没有安装闪电科技时，不加载针对它的 Mixin，本模组原有玩偶功能仍可使用。保持现有 Curios 可选依赖策略。
 
@@ -42,7 +44,7 @@
 
 以伤害来源的实际攻击者判定，包括能通过 DamageSource 归属到佩戴玩家的间接攻击；无玩家归属的环境伤害不触发穿透。
 
-- 在 `CelestweaveArmorDamageHandler.onPre` 入口，对符合条件的攻击跳过该方法，保留进入该方法前已经计算的伤害，不执行模块护盾和反伤。
+- 目标 JAR 为 AE2LT 2.1.3，NeoForge 最低版本提升为 21.1.220。新版在 `CelestweaveArmorDamageHandler.onDamageTypeImmunity` / `onShieldIncoming` / `onPre` 入口跳过对应攻击的伤害类型免疫、模块护盾和反伤，保留这些入口之前的原版伤害处理。
 - 在不死处理类拦截该次攻击的伤害事件、死亡保护、保护窗口和强制死亡恢复路径。
 - 使用按受害实体隔离的攻击上下文，把同一次伤害调用内的 `setHealth` / `die` 等无 DamageSource 的入口关联到当前攻击；调用结束必须清理上下文，支持嵌套伤害且不污染其他目标。
 - 若致死路径触发后续恢复检查，仍需识别该次死亡来源，防止下一次 tick 被不死模块复活；不能仅靠取消单个伤害事件监听器。
@@ -51,7 +53,7 @@
 ## 验证要求
 
 1. 核对指定 JAR 的真实类名、签名、Mixin 调用点与模组依赖。
-2. 自动化测试覆盖缓存更新、重复饰品、40 tick 校验间隔、清理，以及穿透上下文的嵌套隔离和异常清理。
+2. 用户后续明确要求不写测试，因此不新增测试代码；缓存更新、重复饰品、40 tick 校验、清理和嵌套上下文做代码审查，游戏内行为仍须实机验收。
 3. 执行 Gradle check / build，检查产物内 Mixin 配置与模组元数据。
 4. 能运行时做服务端加载验证，确认 Mixin 正确应用；无法运行的游戏行为验证必须明确标注为未验证。
 5. 游戏内验收：佩戴/取下前后电磁炮正常伤害和处决；主目标/连锁/范围/光束；佩戴者近战及归属明确的远程攻击穿透；已有不死窗口、多目标、嵌套伤害、退出重登与重生；无关玩家和环境伤害不受影响。

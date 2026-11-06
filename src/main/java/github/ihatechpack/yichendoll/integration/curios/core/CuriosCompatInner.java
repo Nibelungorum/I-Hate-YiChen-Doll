@@ -1,13 +1,16 @@
-package github.ihatechpack.yichendoll.integration.curios;
+package github.ihatechpack.yichendoll.integration.curios.core;
 
 import github.ihatechpack.yichendoll.IHateYiChenDoll;
 import github.ihatechpack.yichendoll.Res;
 import github.ihatechpack.yichendoll.api.ModEvent;
-import github.ihatechpack.yichendoll.common.item.DollItem;
+import github.ihatechpack.yichendoll.common.MXmDollManager;
+import github.ihatechpack.yichendoll.common.item.ItemDoll;
+import github.ihatechpack.yichendoll.integration.curios.client.DollItemRenderer;
 import github.ihatechpack.yichendoll.registry.ModItems;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -41,7 +44,7 @@ public class CuriosCompatInner {
     @ModEvent(side = ModEvent.Side.ServerSide)
     static void registerDollItemPredicate() {
         CuriosApi.registerCurioPredicate(Res.rl("item_doll"),
-                slotResult -> slotResult.stack().getItem() instanceof DollItem);
+                slotResult -> slotResult.stack().getItem() instanceof ItemDoll);
     }
 
     static void registerDollItemCurioTick(RegisterCapabilitiesEvent event) {
@@ -108,51 +111,45 @@ public class CuriosCompatInner {
             @Override
             public void onEquip(SlotContext slotContext, ItemStack prevStack) {
                 ICurio.super.onEquip(slotContext, prevStack);
-                if (slotContext.entity() instanceof Player player) {
-                    // 飞行能力 这里到时候和I Hate API接入一下
-                    var fly = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT);
-                    if (fly != null) {
-                        AttributeModifier modifier;
-                        if ((modifier = fly.getModifier(Res.rl("flight"))) != null) {
-                            fly.addOrUpdateTransientModifier(new AttributeModifier(Res.rl("flight"), modifier.amount() + 1.0f, AttributeModifier.Operation.ADD_VALUE)); // >0的值意味可以飞行
-                        } else {
-                            fly.addOrUpdateTransientModifier(new AttributeModifier(Res.rl("flight"), 1.0f, AttributeModifier.Operation.ADD_VALUE)); // >0的值意味可以飞行
-                        }
-                        IHateYiChenDoll.LOGGER.info(player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).getModifiers().toString());
-                    }
+                if (!slotContext.cosmetic() && slotContext.entity() instanceof Player player) {
+                    refreshMXmDoll(player, slotContext, stack);
                 }
             }
 
             @Override
             public void onUnequip(SlotContext slotContext, ItemStack newStack) {
                 ICurio.super.onUnequip(slotContext, newStack);
-                if (slotContext.entity() instanceof Player player) {
-                    var fly = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT);
-                    if (fly != null) {
-                        AttributeModifier modifier;
-                        // 这个null判断多余了其实
-                        if ((modifier = fly.getModifier(Res.rl("flight"))) != null) {
-                            fly.addOrUpdateTransientModifier(new AttributeModifier(Res.rl("flight"), modifier.amount() - 1.0f, AttributeModifier.Operation.ADD_VALUE)); // >0的值意味可以飞行
-                            if (Objects.requireNonNull(fly.getModifier(Res.rl("flight"))).amount() == 0.0f) fly.removeModifier(Res.rl("flight"));
-                        }
-                    }
-                    IHateYiChenDoll.LOGGER.info(player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).getModifiers().toString());
+                if (!slotContext.cosmetic() && slotContext.entity() instanceof Player player) {
+                    refreshMXmDoll(player, slotContext, newStack);
                 }
-            }
-        }, ModItems.ITEMS.get("yichen_angel").get()); // 天使玩偶
-        event.registerItem(CuriosCapability.ITEM, (stack, context) -> new ICurio() {
-            @Override
-            public ItemStack getStack() {
-                return stack;
             }
 
             @Override
             public void curioTick(SlotContext slotContext) {
-                if (slotContext.entity() instanceof Player player) {
-                    keepEffect(player, MobEffects.DAMAGE_BOOST);
+                if (!slotContext.cosmetic() && slotContext.entity() instanceof Player player
+                        && MXmDollManager.needsRefresh(player)) {
+                    refreshMXmDoll(player, null, ItemStack.EMPTY);
                 }
             }
-        }, ModItems.ITEMS.get("yichen_chachuqu").get()); // 叉出去玩偶
+        }, ModItems.ITEMS.get("m_xm_").get());
+    }
+
+    static void refreshMXmDoll(Player player, SlotContext changedSlot, ItemStack replacement) {
+        if (!(player instanceof ServerPlayer)) return;
+        boolean wearing = CuriosApi.getCuriosInventory(player).map(inventory -> {
+            for (var entry : inventory.getCurios().entrySet()) {
+                var stacks = entry.getValue().getStacks();
+                for (int index = 0; index < stacks.getSlots(); index++) {
+                    if (!inventory.isSlotActive(entry.getKey(), index)) continue;
+                    // Curios can invoke the callback before the changed stack is visible.
+                    ItemStack equipped = changedSlot != null && changedSlot.identifier().equals(entry.getKey())
+                            && changedSlot.index() == index ? replacement : stacks.getStackInSlot(index);
+                    if (equipped.is(ModItems.ITEMS.get("m_xm_").get())) return true;
+                }
+            }
+            return false;
+        }).orElse(false);
+        MXmDollManager.update(player, wearing);
     }
 
     private static void keepEffect(Player player, Holder<MobEffect> effectHolder) {

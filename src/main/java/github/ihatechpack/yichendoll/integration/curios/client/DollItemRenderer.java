@@ -1,8 +1,8 @@
-package github.ihatechpack.yichendoll.integration.curios;
+package github.ihatechpack.yichendoll.integration.curios.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import github.ihatechpack.yichendoll.common.item.DollItem;
+import github.ihatechpack.yichendoll.common.item.ItemDoll;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.renderer.ItemInHandRenderer;
@@ -20,7 +20,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
 /**
- * 依据原版{@link CustomHeadLayer CustomHeadLayer}书写而来，仅供玩家渲染布偶使用
+ * 依据原版{@link CustomHeadLayer CustomHeadLayer}书写而来，仅供玩家渲染使用
  */
 @OnlyIn(Dist.CLIENT)
 public class DollItemRenderer<T extends LivingEntity, M extends EntityModel<T> & HeadedModel> extends RenderLayer<T, M> {
@@ -63,7 +63,7 @@ public class DollItemRenderer<T extends LivingEntity, M extends EntityModel<T> &
     }
 
     private <LE extends LivingEntity> void rendererDollItem(ItemStack itemStack, LE livingEntity, PoseStack poseStack, MultiBufferSource multiBufferSource, int light) {
-        if (itemStack.getItem() instanceof DollItem dollItem) {
+        if (itemStack.getItem() instanceof ItemDoll itemDoll) {
             poseStack.pushPose();
             poseStack.scale(1.0f, 1.0f, 1.0f);
             this.getParentModel().getHead().translateAndRotate(poseStack);

@@ -1,7 +1,8 @@
-package github.ihatechpack.yichendoll.integration.curios;
-
+package github.ihatechpack.yichendoll.integration.curios.core;
 
 import github.ihatechpack.yichendoll.api.ModEvent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.fml.ModList;
@@ -32,6 +33,12 @@ public class CuriosExtension {
         if (!IS_LOADED) return;
 
         CuriosCompatInner.registerDollItemCurioTick(event);
+    }
+
+    public static void refreshMXmDoll(Player player) {
+        if (!IS_LOADED) return;
+
+        CuriosCompatInner.refreshMXmDoll(player, null, ItemStack.EMPTY);
     }
 
     @ModEvent(side = ModEvent.Side.ServerSide)

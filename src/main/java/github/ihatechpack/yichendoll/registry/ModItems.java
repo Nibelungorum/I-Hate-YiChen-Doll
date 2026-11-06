@@ -3,8 +3,7 @@ package github.ihatechpack.yichendoll.registry;
 
 import github.ihatechpack.yichendoll.IHateYiChenDoll;
 import github.ihatechpack.yichendoll.Res;
-import github.ihatechpack.yichendoll.common.block.Doll;
-import github.ihatechpack.yichendoll.common.item.DollItem;
+import github.ihatechpack.yichendoll.common.item.ItemDoll;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -24,21 +23,24 @@ public class ModItems {
     public static final LinkedHashMap<String, DeferredHolder<Item, Item>> ITEMS = new LinkedHashMap<>();
 
     public static void register(IEventBus bus) {
-        Arrays.stream(Res.howxu).forEach(str -> {
-            ITEMS.put(str, REGISTER.register(str, () -> new DollItem(ModBlocks.BLOCKS.get(str).get(),2,3)));
+        DollRegistery.DOLLS.forEach(doll -> {
+            ITEMS.put(doll.id(), REGISTER.register(doll.id(),()-> new ItemDoll(ModBlocks.BLOCKS.get(doll.id()).get(),doll.level())));
         });
-        Arrays.stream(Res.hualeibao).forEach(str -> {
-            ITEMS.put(str, REGISTER.register(str, () -> new DollItem(ModBlocks.BLOCKS.get(str).get(),1,1)));
-        });
-        Arrays.stream(Res.yichens).forEach(str -> {
-            ITEMS.put(str, REGISTER.register(str, () -> new DollItem(ModBlocks.BLOCKS.get(str).get(),2,2)));
-        });
-        Arrays.stream(Res.tech_guys).forEach(str -> {
-            ITEMS.put(str, REGISTER.register(str, () -> new DollItem(ModBlocks.BLOCKS.get(str).get(),1,0)));
-        });
-        Arrays.stream(Res.specials).forEach(str -> {
-            ITEMS.put(str, REGISTER.register(str, () -> new DollItem(ModBlocks.BLOCKS.get(str).get(),2,1)));
-        });
+        // Arrays.stream(Res.howxu).forEach(str -> {
+        //     ITEMS.put(str, REGISTER.register(str, () -> new ItemDoll(ModBlocks.BLOCKS.get(str).get(),2,3)));
+        // });
+        // Arrays.stream(Res.hualeibao).forEach(str -> {
+        //     ITEMS.put(str, REGISTER.register(str, () -> new ItemDoll(ModBlocks.BLOCKS.get(str).get(),1,1)));
+        // });
+        // Arrays.stream(Res.yichens).forEach(str -> {
+        //     ITEMS.put(str, REGISTER.register(str, () -> new ItemDoll(ModBlocks.BLOCKS.get(str).get(),2,2)));
+        // });
+        // Arrays.stream(Res.tech_guys).forEach(str -> {
+        //     ITEMS.put(str, REGISTER.register(str, () -> new ItemDoll(ModBlocks.BLOCKS.get(str).get(),1,0)));
+        // });
+        // Arrays.stream(Res.specials).forEach(str -> {
+        //     ITEMS.put(str, REGISTER.register(str, () -> new ItemDoll(ModBlocks.BLOCKS.get(str).get(),2,1)));
+        // });
         REGISTER.register(bus);
     }
 }

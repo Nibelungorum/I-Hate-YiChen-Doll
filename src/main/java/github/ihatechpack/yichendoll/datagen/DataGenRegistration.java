@@ -1,25 +1,17 @@
 package github.ihatechpack.yichendoll.datagen;
 
-import com.ibm.icu.impl.locale.LocaleDistance;
-import github.ihatechpack.yichendoll.IHateYiChenDollClient;
-import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.client.model.CompositeModel;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @description: TODO
  * @author: HowXu
  * @date: 2026/1/11 14:49
  */
-public class DataGen {
+public class DataGenRegistration {
 
     public static void init(IEventBus mod){
-        mod.addListener(DataGen::gatherData);
+        mod.addListener(DataGenRegistration::gatherData);
     }
 
     private static void gatherData(GatherDataEvent event) {

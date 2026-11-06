@@ -1,6 +1,7 @@
 package github.ihatechpack.yichendoll.common.block;
 
 import com.mojang.serialization.MapCodec;
+import github.ihatechpack.yichendoll.registry.DollRegistery;
 import github.ihatechpack.yichendoll.registry.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,7 +38,7 @@ import org.jetbrains.annotations.Nullable;
  * @author: HowXu
  * @date: 2025/9/12 18:22
  */
-public class Doll extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
+public class BlockDoll extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     // 碰撞箱
     private static final VoxelShape DOLL_SHAPE = Block.box(2.0d, 0.0d, 2.0d, 14.0d, 12.0d, 14.0d);
@@ -52,16 +53,11 @@ public class Doll extends HorizontalDirectionalBlock implements SimpleWaterlogge
     private static final float PITCH_VARIANCE = 0.5f;
     private static final float BASE_PITCH = 0.75f;
 
-    private String reg_name;
-
-    public Doll(String reg_name) {
+    private final DollRegistery.Doll _doll;
+    public BlockDoll(DollRegistery.Doll doll) {
         super(Properties.of().instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.WOOL).strength(0f, 10f).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH).setValue(WATERLOGGED, false));
-        this.reg_name = reg_name;
-    }
-
-    public String getReg_name() {
-        return reg_name;
+        this._doll = doll;
     }
 
     @Override
@@ -140,8 +136,12 @@ public class Doll extends HorizontalDirectionalBlock implements SimpleWaterlogge
 
     // Why I need rewrite this ?
     @Override
-    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+    protected @Nullable MapCodec<? extends HorizontalDirectionalBlock> codec() {
         return null;
+    }
+
+    public DollRegistery.Doll get_doll() {
+        return _doll;
     }
 }
 
