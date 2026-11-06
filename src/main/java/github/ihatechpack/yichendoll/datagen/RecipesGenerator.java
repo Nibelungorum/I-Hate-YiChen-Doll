@@ -34,7 +34,7 @@ public class RecipesGenerator extends RecipeProvider {
         super(output, registries);
     }
 
-    private Item[] recipeRaws = {
+    private final Item[] recipeRaws = {
             // Items.IRON_INGOT,
             // Items.GOLD_INGOT,
             // Items.DIAMOND,
@@ -59,7 +59,7 @@ public class RecipesGenerator extends RecipeProvider {
             // ModItems.ITEMS.get("howxu").get(),
             // Items.LEATHER
     };
-    private int i = 0;
+    private final int i = 0;
 
 
     @Override

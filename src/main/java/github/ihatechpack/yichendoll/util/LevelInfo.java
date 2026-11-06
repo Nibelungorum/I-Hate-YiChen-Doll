@@ -46,7 +46,7 @@ public class LevelInfo {
 
         final String id;
         final ChatFormatting color;
-        private Level(String id, ChatFormatting color){
+        Level(String id, ChatFormatting color){
             this.id = id;
             this.color = color;
         }
