@@ -12,9 +12,6 @@ public abstract class LocalPlayerFlightMixin {
     @ModifyExpressionValue(method = "aiStep", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/world/item/ItemStack;canElytraFly(Lnet/minecraft/world/entity/LivingEntity;)Z"))
     private boolean yichendoll$canGlide(boolean original) {
-        if (!original) {
-            DollFlight.canGlide((LocalPlayer) (Object) this);
-        }
-        return true;
+        return original || DollFlight.canGlide((LocalPlayer) (Object) this);
     }
 }

@@ -1,10 +1,13 @@
 package github.ihatechpack.yichendoll.integration.appflux;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.fml.ModList;
 
-/** Only the AE2 loaded adapter passes a native KeyCounter through this optional boundary. */
+/** Only the AE2 loaded adapter passes native storage and statistics through this optional boundary. */
 public interface AppliedFluxBridge {
     long storedFE(Object nativeKeyCounter);
+
+    default boolean consumeFE(Object nativeStorage, ServerPlayer player, long amount) { return false; }
 
     static AppliedFluxBridge get() {
         return Holder.INSTANCE;

@@ -20,7 +20,7 @@ public final class MeDollBehavior implements DollBehavior {
     public static final MeDollBehavior BUDAI_SEE_U = new MeDollBehavior("budai_see_u", ModAttributes.DAMAGE_REDUCTION,
             stats -> Math.min(100, stats.nodes()));
     public static final MeDollBehavior YUANXI = new MeDollBehavior("yuanxi_19", Attributes.MAX_HEALTH,
-            stats -> stats.storedFE() / 1_000_000d);
+            stats -> stats.storedFE() / 1_000_000_00d);
 
     private final ResourceLocation modifier;
     private final Holder<Attribute> attribute;
@@ -45,7 +45,9 @@ public final class MeDollBehavior implements DollBehavior {
 
     @Override
     public void tick(DollContext context) {
-        if (context.player().getServer().getTickCount() % 40 == 0) update(context);
+        if (context.player().getServer().getTickCount() % 40 != 0) return;
+        update(context);
+        if (attribute == Attributes.MAX_HEALTH) heal(context);
     }
 
     private void update(DollContext context) {
@@ -55,6 +57,18 @@ public final class MeDollBehavior implements DollBehavior {
         }
         ModAttributes.update(context.player(), attribute, modifier, Math.min(Integer.MAX_VALUE, highest));
         clampHealth(context);
+    }
+
+    private void heal(DollContext context) {
+        var player = context.player();
+        if (!player.isAlive() || player.getHealth() >= player.getMaxHealth()) return;
+        long cost = (long) Math.ceil((player.getMaxHealth() - (double) player.getHealth()) * 100);
+        for (var stack : context.stacks()) {
+            if (AE2Bridge.get().consumeFE(player, stack, cost)) {
+                player.setHealth(player.getMaxHealth());
+                return;
+            }
+        }
     }
 
     private void clampHealth(DollContext context) {

@@ -1,17 +1,20 @@
 package github.ihatechpack.yichendoll.mixin.common;
 
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-/** Raises only vanilla max health's numeric ceiling; all other ranges and base values stay unchanged. */
-@Mixin(RangedAttribute.class)
+/** Raises only max health's declared ceiling, preserving its base, minimum and vanilla clamping. */
+@Mixin(Attributes.class)
 public abstract class MaxHealthAttributeMixin {
-    @Inject(method = "sanitizeValue", at = @At("HEAD"), cancellable = true)
-    private void yichendoll$healthCeiling(double value, CallbackInfoReturnable<Double> cir) {
-        Attributes.MAX_HEALTH.value();
+    @ModifyArgs(method = "<clinit>", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/world/entity/ai/attributes/RangedAttribute;<init>(Ljava/lang/String;DDD)V"))
+    private static void yichendoll$healthCeiling(Args args) {
+        if ("attribute.name.generic.max_health".equals(args.get(0))) {
+            double existingMax = args.get(3);
+            args.set(3, Math.max(existingMax, Integer.MAX_VALUE));
+        }
     }
 }

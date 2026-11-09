@@ -15,6 +15,7 @@ public interface AE2Bridge {
     default void initialize() {}
     default void clear() {}
     default MeNetworkStats sample(ServerPlayer player, ItemStack stack) { return MeNetworkStats.EMPTY; }
+    default boolean consumeFE(ServerPlayer player, ItemStack stack, long amount) { return false; }
 
     final class Holder {
         private static final AE2Bridge INSTANCE = load();

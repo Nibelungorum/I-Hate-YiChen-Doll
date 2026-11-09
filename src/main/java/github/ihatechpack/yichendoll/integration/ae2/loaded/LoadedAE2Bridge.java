@@ -42,16 +42,30 @@ public final class LoadedAE2Bridge implements AE2Bridge {
         });
     }
 
-    @Override
-    public MeNetworkStats sample(ServerPlayer player, ItemStack stack) {
+    private IGrid resolveGrid(ServerPlayer player, ItemStack stack) {
         GlobalPos link = stack.get(ModDataComponents.ME_LINK.get());
-        if (link == null) return MeNetworkStats.EMPTY;
+        if (link == null) return null;
         var level = player.getServer().getLevel(link.dimension());
         if (level == null || !level.hasChunkAt(link.pos())
                 || !(level.getBlockEntity(link.pos()) instanceof IWirelessAccessPoint accessPoint)
-                || !accessPoint.isActive()) return MeNetworkStats.EMPTY;
+                || !accessPoint.isActive()) return null;
         IGrid grid = accessPoint.getGrid();
-        if (grid == null || grid.isEmpty() || !grid.getEnergyService().isNetworkPowered()) return MeNetworkStats.EMPTY;
+        if (grid == null || grid.isEmpty() || !grid.getEnergyService().isNetworkPowered()) return null;
+        return grid;
+    }
+
+    @Override
+    public boolean consumeFE(ServerPlayer player, ItemStack stack, long amount) {
+        if (amount <= 0) return false;
+        IGrid grid = resolveGrid(player, stack);
+        return grid != null && AppliedFluxBridge.get().consumeFE(
+                grid.getStorageService().getInventory(), player, amount);
+    }
+
+    @Override
+    public MeNetworkStats sample(ServerPlayer player, ItemStack stack) {
+        IGrid grid = resolveGrid(player, stack);
+        if (grid == null) return MeNetworkStats.EMPTY;
         long tick = player.getServer().getTickCount();
         Cached previous = snapshots.get(grid);
         if (previous != null && tick >= previous.tick() && tick / 40 == previous.tick() / 40) return previous.stats();
