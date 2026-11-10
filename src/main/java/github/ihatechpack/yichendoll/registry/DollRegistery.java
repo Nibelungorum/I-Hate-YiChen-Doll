@@ -4,6 +4,7 @@ import github.ihatechpack.yichendoll.api.doll.DollBehavior;
 import github.ihatechpack.yichendoll.common.doll.behavior.MXmFreeDollBehavior;
 import github.ihatechpack.yichendoll.common.doll.behavior.MeDollBehavior;
 import github.ihatechpack.yichendoll.common.doll.behavior.HowxuDollBehavior;
+import github.ihatechpack.yichendoll.common.doll.behavior.PotionDollBehavior;
 import github.ihatechpack.yichendoll.util.LevelInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -30,7 +31,11 @@ public class DollRegistery {
         addStreamer("budai_see_u", MeDollBehavior.BUDAI_SEE_U);
         addStreamer("budai", MeDollBehavior.BUDAI);
         addStreamer("qingjiao");
+        addStreamer("yitiaotianyu", PotionDollBehavior.YITIAOTIANYU);
+        addFan("cnansz", PotionDollBehavior.CNANSZ);
+        addFan("suifengyao", PotionDollBehavior.SUIFENGYAO);
         addKernel("yuanxi_19", MeDollBehavior.YUANXI);
+        addKernel("yuanxi_19_new", DollBehavior.NONE);
     }
 
     private static void addGod(String id, DollBehavior behavior) {
@@ -46,7 +51,7 @@ public class DollRegistery {
 
     private static void addStreamer(String id, DollBehavior behavior) {
         DOLLS.add(new Doll(id, LevelInfo.Level.Streamer,list -> {
-            if (!(id.equals("budai") || id.equals("m_xm_") || id.equals("budai_see_u"))){
+            if (!(id.equals("budai") || id.equals("budai_see_u") || id.equals("yitiaotianyu"))){
                 list.add(Component.translatable(prefix_tip + id + ".0").withStyle(LevelInfo.getColor(LevelInfo.Level.Streamer)));
             }
             list.add(Component.translatable(prefix_tip + id + ".1").withStyle(LevelInfo.getColor(LevelInfo.Level.Streamer)));
@@ -61,9 +66,13 @@ public class DollRegistery {
     }
 
     private static void addFan(String id) {
+        addFan(id, DollBehavior.NONE);
+    }
+
+    private static void addFan(String id, DollBehavior behavior) {
         DOLLS.add(new Doll(id, LevelInfo.Level.Fan, list -> {
             list.add(Component.translatable(prefix_tip + id + ".0").withStyle(LevelInfo.getColor(LevelInfo.Level.Fan)));
-        }));
+        }, behavior));
     }
 
     public record Doll(String id, LevelInfo.Level level, Descriptaion desc, DollBehavior behavior) {

@@ -6,10 +6,20 @@
   "mixins": [
     "common.ItemStackDurabilityMixin",
     "common.PlayerMiningMixin",
-    "common.MaxHealthAttributeMixin"
+    "common.MaxHealthAttributeMixin",
+    "common.PotionOwnershipSaveMixin",
+    "common.PotionEffectCloneMixin",
+    "common.PlayerEffectProtectionMixin"
   ],
   "client": [
-    "client.CustomHeadLayerMixin"
+    "client.CustomHeadLayerMixin",
+    "client.LevelRendererEffectsMixin",
+    "client.LightTextureEffectsMixin",
+    "client.MobEffectFogMixin",
+    "client.FogRendererEffectsMixin",
+    "client.LocalPlayerEffectsMixin",
+    "client.GameRendererEffectsMixin",
+    "client.GuiEffectsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

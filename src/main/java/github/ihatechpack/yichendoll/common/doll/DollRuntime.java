@@ -2,6 +2,7 @@ package github.ihatechpack.yichendoll.common.doll;
 
 import github.ihatechpack.yichendoll.IHateYiChenDoll;
 import github.ihatechpack.yichendoll.api.doll.EquippedDoll;
+import github.ihatechpack.yichendoll.common.doll.behavior.PotionDollBehavior;
 import github.ihatechpack.yichendoll.integration.curios.CuriosBridge;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -77,6 +78,7 @@ public final class DollRuntime {
 
     @SubscribeEvent
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) PotionDollBehavior.restore(player);
         refresh(event.getEntity());
     }
 
@@ -110,5 +112,6 @@ public final class DollRuntime {
         PLAYERS.clear();
         DollFlight.clear();
         AE2Bridge.get().clear();
+        PotionDollBehavior.clearAll();
     }
 }

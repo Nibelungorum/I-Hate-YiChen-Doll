@@ -4,75 +4,6 @@
   "config.jade.plugin_ihateyichendoll.doll_block": "玩偶方块",
   "subtitle.ihateyichendoll.block.duck_toy": "玩偶声音",
 
-  "block.ihateyichendoll.yichen_mm": "忆宸 yichen_mm",
-  "item.ihateyichendoll.doll_tip.yichen_mm.0": "女巫？？！！女巫你个蛋女巫！！",
-  "item.ihateyichendoll.doll_tip.yichen_mm.1": "一群冷漠的科技佬！叉出去！！",
-
-  "block.ihateyichendoll.yichen_dan": "忆宸 yichen_mm",
-  "item.ihateyichendoll.doll_tip.yichen_dan.0": "你有个蛋版",
-  "item.ihateyichendoll.doll_tip.yichen_dan.1": "你给我做个蛋？？！！",
-
-  "block.ihateyichendoll.yichen_nvwu": "忆宸 yichen_mm",
-  "item.ihateyichendoll.doll_tip.yichen_nvwu.0": "女巫版",
-  "item.ihateyichendoll.doll_tip.yichen_nvwu.1": "0人发现左手上拿的是忘本n_n",
-
-  "block.ihateyichendoll.yichen_nvpu": "忆宸 yichen_mm",
-  "item.ihateyichendoll.doll_tip.yichen_nvpu.0": "女仆版",
-  "item.ihateyichendoll.doll_tip.yichen_nvpu.1": "就算是给情绪叉出去，这也是女仆版！！！",
-
-  "block.ihateyichendoll.yichen_xixi": "忆宸 yichen_mm",
-  "item.ihateyichendoll.doll_tip.yichen_xixi.0": "丑的一版",
-  "item.ihateyichendoll.doll_tip.yichen_xixi.1": "三天掉粉两百个 这版权费也就够个早餐钱",
-
-  "block.ihateyichendoll.yichen_puxin": "忆宸 yichen_mm",
-  "item.ihateyichendoll.doll_tip.yichen_puxin.0": "普通且自信版",
-  "item.ihateyichendoll.doll_tip.yichen_puxin.1": "忆宸参加闹麻比赛往那一站就拿了第一名你说闹不闹麻",
-
-  "block.ihateyichendoll.yichen_angel": "忆宸 yichen_mm",
-  "item.ihateyichendoll.doll_tip.yichen_angel.0": "天使版",
-  "item.ihateyichendoll.doll_tip.yichen_angel.1": "你再说给空巷的模型好给忆宸的模型坏试试？",
-
-  "block.ihateyichendoll.yichen_chachuqu": "忆宸 yichen_mm",
-  "item.ihateyichendoll.doll_tip.yichen_chachuqu.0": "叉出去版",
-  "item.ihateyichendoll.doll_tip.yichen_chachuqu.1": "最正宗的一集",
-
-  "block.ihateyichendoll.yichen_chachuqu2": "忆宸 yichen_mm",
-  "item.ihateyichendoll.doll_tip.yichen_chachuqu2.0": "宠粉版",
-  "item.ihateyichendoll.doll_tip.yichen_chachuqu2.1": "狗屎面包最大批发商",
-
-  "block.ihateyichendoll.yichen_zhale": "忆宸 yichen_mm",
-  "item.ihateyichendoll.doll_tip.yichen_zhale.0": "低人一等版",
-  "item.ihateyichendoll.doll_tip.yichen_zhale.1": "据说做完这个情绪跑国外躲了一阵子",
-
-  "block.ihateyichendoll.yichen_winter": "忆宸 yichen_mm",
-  "item.ihateyichendoll.doll_tip.yichen_winter.0": "冬日限定",
-  "item.ihateyichendoll.doll_tip.yichen_winter.1": "比冬天的雪先到的是手心的温度",
-
-  "block.ihateyichendoll.gotopark": "空巷寡淡 gotopark",
-  "item.ihateyichendoll.doll_tip.gotopark.0": "我是空巷 我喜欢看会员空间",
-
-  "block.ihateyichendoll.bury_love": "无碍 Bury_love",
-  "item.ihateyichendoll.doll_tip.bury_love.0": "一个早期的弹幕组成员",
-
-  "block.ihateyichendoll.big_yusen": "吾欠森 big_YuSen",
-  "item.ihateyichendoll.doll_tip.big_yusen.0": "当时忆宸文化有限乱读一通 痛失原名",
-
-  "block.ihateyichendoll.riji_": "戈兀(日记) riji_",
-  "item.ihateyichendoll.doll_tip.riji_.0": "至今粉丝灯牌都是灭的(摊手)",
-
-  "block.ihateyichendoll.suifengyao": "随风鹞 SuiFengYao",
-  "item.ihateyichendoll.doll_tip.suifengyao.0": "神秘老Old 开服级粉丝",
-
-  "block.ihateyichendoll.dchen233": "辰 Dchen233",
-  "item.ihateyichendoll.doll_tip.dchen233.0": "艺术生啊 要不要考虑加入花蕾包当美工呀n_n",
-
-  "block.ihateyichendoll.ohana_1234": "等等等等等等风 ohana_1234",
-  "item.ihateyichendoll.doll_tip.ohana_1234.0": "请输入文本",
-
-  "block.ihateyichendoll.aluo": "啊落",
-  "item.ihateyichendoll.doll_tip.aluo.0": "特邀嘉宾",
-  "item.ihateyichendoll.doll_tip.aluo.1": "再说啊落的不是我们i落给你这个叫忆宸的冲了",
-
   "curios.identifier.doll": "玩偶",
   "attribute.ihateyichendoll.all_damage": "全伤",
   "attribute.ihateyichendoll.invulnerability_ticks": "无敌帧",
@@ -81,12 +12,12 @@
   "tooltip.ihateyichendoll.me_linked": "ME网络: 已链接",
   "tooltip.ihateyichendoll.me_unlinked": "ME网络: 未链接",
   "tooltip.ihateyichendoll.hold_shift": "按住[%s]查看额外描述",
-  "tooltip.ihateyichendoll.effect.howxu": "提供创造飞行，飞行时免除空中挖掘速度惩罚",
+  "tooltip.ihateyichendoll.effect.howxu": "提供创造飞行与飞行惩罚消除",
   "tooltip.ihateyichendoll.effect.qingjiao": "内部存储的FE将抵消耐久消耗",
   "tooltip.ihateyichendoll.effect.m_xm_": "ME网络的平均耗能将提供全伤害加成",
   "tooltip.ihateyichendoll.effect.budai": "ME网络中每AEKey类型增加1 tick受击无敌",
   "tooltip.ihateyichendoll.effect.budai_see_u": "ME网络中每1个节点增加1%全伤害减免",
-  "tooltip.ihateyichendoll.effect.yuanxi_19": "ME网络中每100M FE存储增加1生命值；每40 tick检查血量，消耗缺失生命值×100 FE恢复满血（费用向上取整，能量不足时不治疗）",
+  "tooltip.ihateyichendoll.effect.yuanxi_19": "ME网络中每 100M FE存储增加1生命值 | 自动生命值回复",
   "tooltip.ihateyichendoll.effect.m_xm_free": "免疫电磁炮且攻击可穿透苍穹织雷",
 
   "block.ihateyichendoll.howxu": "情绪 howxu",
@@ -98,7 +29,8 @@
   "item.ihateyichendoll.doll_tip.m_xm_free.1": "因为我感觉你的运气是真的很不错",
 
   "block.ihateyichendoll.m_xm_": "觅觅子 M_XM_",
-  "item.ihateyichendoll.doll_tip.m_xm_.1": "下午三点前起床的概率是?",
+  "item.ihateyichendoll.doll_tip.m_xm_.0": "家里开动物园",
+  "item.ihateyichendoll.doll_tip.m_xm_.1": "食谱: 大象炒河马 犀牛炖蓝鲸",
 
   "block.ihateyichendoll.budai": "不呆 MJ_DD",
   "item.ihateyichendoll.doll_tip.budai.1": "没有你的宇宙才是太空",
@@ -108,9 +40,27 @@
 
   "block.ihateyichendoll.yuanxi_19": "源曦 YuanXi_19",
   "item.ihateyichendoll.doll_tip.yuanxi_19.0": "千载独步 唯公一人",
-  "item.ihateyichendoll.doll_tip.yuanxi_19.1": "源源的曦啊 你现在已经是一个不玩担架活不起的纯小子了啊",
+  "item.ihateyichendoll.doll_tip.yuanxi_19.1": "已经不是轮椅和担架了 这种是救护车",
 
   "block.ihateyichendoll.qingjiao": "青椒酱 QingJiaoGG",
   "item.ihateyichendoll.doll_tip.qingjiao.0": "何日人间重逢",
-  "item.ihateyichendoll.doll_tip.qingjiao.1": "等你青色的椒明年拿着9800X3D过来 我希望你还笑得出来"
+  "item.ihateyichendoll.doll_tip.qingjiao.1": "等你青色的椒明年拿着9800X3D过来 我希望你还笑得出来",
+
+  "block.ihateyichendoll.yitiaotianyu": "一条甜鱼 yitiaotianyu",
+  "item.ihateyichendoll.doll_tip.yitiaotianyu.1": "我要征服亚特兰蒂斯",
+
+  "block.ihateyichendoll.cnansz": "木生 CNANSZ",
+  "item.ihateyichendoll.doll_tip.cnansz.0": "旧时代的最后传火者",
+
+  "block.ihateyichendoll.yuanxi_19_new": "源曦 YuanXi_19",
+  "item.ihateyichendoll.doll_tip.yuanxi_19_new.0": "诡秘之主",
+  "item.ihateyichendoll.doll_tip.yuanxi_19_new.1": "快点去教觅觅子玩格雷 这样就可以玩GTO了",
+
+  "block.ihateyichendoll.suifengyao": "随风鹞 SuiFengYao",
+  "item.ihateyichendoll.doll_tip.suifengyao.0": "亮仔",
+
+  "tooltip.ihateyichendoll.effect.yitiaotianyu": "永恒的海豚的恩惠 无穷的潮涌能量 不竭的幸运",
+  "tooltip.ihateyichendoll.effect.suifengyao": "亮仔专属RGB加持 看穿迷雾的眼睛",
+  "tooltip.ihateyichendoll.effect.yuanxi_19_new": "无视失明 反胃 黑暗效果",
+  "tooltip.ihateyichendoll.effect.cnansz": "永恒的火焰免疫 无限的晕碳"
 }
