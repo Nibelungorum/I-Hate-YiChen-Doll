@@ -74,6 +74,10 @@ public class RecipesGenerator extends RecipeProvider {
         standardRecipe(Items.PORKCHOP,"m_xm_free");
         standardRecipe(ModItems.ITEMS.get("howxu").get(),"budai");
         standardRecipe(Ingredient.of(ItemTags.create(ResourceLocation.parse("minecraft:flowers"))),"budai_see_u");
+        standardRecipe(Ingredient.of(ItemTags.FISHES),"yitiaotianyu");
+        standardRecipe(Items.GOLDEN_CARROT,"cnansz");
+        standardRecipe(Items.GLOWSTONE_DUST,"suifengyao");
+        standardRecipe(Items.ENDER_PEARL,"yuanxi_19_new");
         // ModItems.ITEMS.forEach((name, holder) -> {
         //     if ("m_xm_".equals(name)) return;
         //     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, holder.get())
