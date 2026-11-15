@@ -1,0 +1,13 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:single",
+      "resource": "ihateyichendoll:entity/cosmic_wings_mask"
+    },
+    {
+      "type": "minecraft:directory",
+      "source": "ihateyichendoll:misc/cosmic",
+      "prefix": "ihateyichendoll:misc/cosmic/"
+    }
+  ]
+}

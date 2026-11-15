@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Block;
 import java.util.List;
 
 /** Linkable through AE2's native wireless AP slot without inheriting AE2's powered-item hierarchy. */
-public final class MeNetworkDollItem extends ItemDoll {
+public class MeNetworkDollItem extends ItemDoll {
     public MeNetworkDollItem(Block block, LevelInfo.Level level) {
         super(block, level);
     }

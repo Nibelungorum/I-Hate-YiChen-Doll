@@ -11,6 +11,15 @@
   "tooltip.ihateyichendoll.energy": "能量：%s / %s FE",
   "tooltip.ihateyichendoll.me_linked": "ME网络: 已链接",
   "tooltip.ihateyichendoll.me_unlinked": "ME网络: 未链接",
+  "message.ihateyichendoll.cosmic_wings.render": "渲染: ",
+  "message.ihateyichendoll.cosmic_wings.enabled": "开启",
+  "message.ihateyichendoll.cosmic_wings.disabled": "关闭",
+  "tooltip.ihateyichendoll.cosmic_wings.theme": "主色: ",
+  "tooltip.ihateyichendoll.cosmic_wings.undyed": "无",
+  "message.ihateyichendoll.budai_shield.render": "渲染: ",
+  "message.ihateyichendoll.budai_shield.enabled": "开启",
+  "message.ihateyichendoll.budai_shield.disabled": "关闭",
+  "tooltip.ihateyichendoll.budai_shield.toggle": "永恒守护",
   "tooltip.ihateyichendoll.hold_shift": "按住[%s]查看额外描述",
   "tooltip.ihateyichendoll.effect.howxu": "提供创造飞行与飞行惩罚消除",
   "tooltip.ihateyichendoll.effect.qingjiao": "内部存储的FE将抵消耐久消耗",
@@ -47,7 +56,7 @@
   "item.ihateyichendoll.doll_tip.qingjiao.1": "等你青色的椒明年拿着9800X3D过来 我希望你还笑得出来",
 
   "block.ihateyichendoll.yitiaotianyu": "一条甜鱼 yitiaotianyu",
-  "item.ihateyichendoll.doll_tip.yitiaotianyu.1": "我要征服亚特兰蒂斯",
+  "item.ihateyichendoll.doll_tip.yitiaotianyu.0": "我要征服亚特兰蒂斯",
 
   "block.ihateyichendoll.cnansz": "木生 CNANSZ",
   "item.ihateyichendoll.doll_tip.cnansz.0": "旧时代的最后传火者",
@@ -55,6 +64,7 @@
   "block.ihateyichendoll.yuanxi_19_new": "源曦 YuanXi_19",
   "item.ihateyichendoll.doll_tip.yuanxi_19_new.0": "诡秘之主",
   "item.ihateyichendoll.doll_tip.yuanxi_19_new.1": "快点去教觅觅子玩格雷 这样就可以玩GTO了",
+
 
   "block.ihateyichendoll.suifengyao": "随风鹞 SuiFengYao",
   "item.ihateyichendoll.doll_tip.suifengyao.0": "亮仔",

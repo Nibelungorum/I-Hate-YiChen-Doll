@@ -1,6 +1,10 @@
 package github.ihatechpack.yichendoll.client;
 
 import github.ihatechpack.yichendoll.IHateYiChenDoll;
+import github.ihatechpack.yichendoll.client.render.shield.BudaiShieldLayer;
+import github.ihatechpack.yichendoll.client.render.wings.CosmicWingsLayer;
+import github.ihatechpack.yichendoll.client.shader.BudaiShieldShaders;
+import github.ihatechpack.yichendoll.client.shader.CosmicWingsShaders;
 import github.ihatechpack.yichendoll.integration.curios.client.CuriosClientBridge;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -21,6 +25,11 @@ public class IHateYiChenDollClient {
         DollTooltips.setShiftDown(Screen::hasShiftDown);
         DollFlight.setClientBoosting(DollFlightInput::isBoosting);
         modBus.addListener(CuriosClientBridge.get()::addEntityLayers);
+        modBus.addListener(BudaiShieldLayer::register);
+        modBus.addListener(CosmicWingsLayer::register);
+        modBus.addListener(BudaiShieldShaders::registerShaders);
+        modBus.addListener(CosmicWingsShaders::registerShaders);
+        modBus.addListener(CosmicWingsShaders::onAtlasStitched);
     }
 
 }
