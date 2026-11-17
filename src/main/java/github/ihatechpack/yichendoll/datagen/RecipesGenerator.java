@@ -75,7 +75,7 @@ public class RecipesGenerator extends RecipeProvider {
         standardRecipe(Items.ENDER_EYE,"qingjiao");
         standardRecipe(Items.REDSTONE,"yuanxi_19");
         standardRecipe(Items.COOKED_PORKCHOP, "m_xm_");
-        cosmicWingsDyeRecipes();
+        wingDyeRecipes();
         standardRecipe(Items.PORKCHOP,"m_xm_free");
         standardRecipe(ModItems.ITEMS.get("howxu").get(),"budai");
         standardRecipe(Ingredient.of(ItemTags.create(ResourceLocation.parse("minecraft:flowers"))),"budai_see_u");
@@ -111,17 +111,20 @@ public class RecipesGenerator extends RecipeProvider {
         //         .save(p_recipeOutput, Res.rl("m_xm_"));
     }
 
-    private void cosmicWingsDyeRecipes() {
-        Item doll = ModItems.ITEMS.get("m_xm_").get();
-        for (DyeColor dye : DyeColor.values()) {
-            ItemStack result = new ItemStack(doll);
-            result.set(ModDataComponents.COSMIC_WINGS_DYE.get(), dye.getName());
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result)
-                    .group(IHateYiChenDoll.MOD_ID)
-                    .requires(doll)
-                    .requires(DyeItem.byColor(dye))
-                    .unlockedBy("has_m_xm_", has(doll))
-                    .save(this._p_recipeOutput, Res.rl("m_xm_dye_" + dye.getName()));
+    private void wingDyeRecipes() {
+        for (String id : new String[]{"m_xm_", "m_xm_free"}) {
+            Item doll = ModItems.ITEMS.get(id).get();
+            String recipePrefix = id.endsWith("_") ? id : id + "_";
+            for (DyeColor dye : DyeColor.values()) {
+                ItemStack result = new ItemStack(doll);
+                result.set(ModDataComponents.COSMIC_WINGS_DYE.get(), dye.getName());
+                ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result)
+                        .group(IHateYiChenDoll.MOD_ID)
+                        .requires(doll)
+                        .requires(DyeItem.byColor(dye))
+                        .unlockedBy("has_" + id, has(doll))
+                        .save(this._p_recipeOutput, Res.rl(recipePrefix + "dye_" + dye.getName()));
+            }
         }
     }
 

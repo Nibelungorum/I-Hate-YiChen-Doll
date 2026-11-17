@@ -6,8 +6,8 @@
     },
     {
       "type": "minecraft:directory",
-      "source": "ihateyichendoll:misc/cosmic",
-      "prefix": "ihateyichendoll:misc/cosmic/"
+      "source": "misc/cosmic",
+      "prefix": "misc/cosmic/"
     }
   ]
 }

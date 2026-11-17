@@ -4,8 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import github.ihatechpack.yichendoll.client.shader.CosmicWingsRenderTypes;
 import github.ihatechpack.yichendoll.client.shader.CosmicWingsShaders;
+import github.ihatechpack.yichendoll.common.doll.DollWings;
 import github.ihatechpack.yichendoll.integration.curios.CuriosBridge;
-import github.ihatechpack.yichendoll.registry.ModDataComponents;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -20,20 +20,16 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.FastColor;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 /** Renders the cosmic wings independently of armor or flight state. */
 public final class CosmicWingsLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-    private final ModelPart leftWing;
-    private final ModelPart rightWing;
+    private final ModelPart body;
 
     public CosmicWingsLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderer) {
         super(renderer);
-        ModelPart root = createLayer().bakeRoot();
-        this.leftWing = root.getChild("left_wing");
-        this.rightWing = root.getChild("right_wing");
+        this.body = createLayer().bakeRoot().getChild("body");
     }
 
     public static void register(EntityRenderersEvent.AddLayers event) {
@@ -46,14 +42,14 @@ public final class CosmicWingsLayer extends RenderLayer<AbstractClientPlayer, Pl
 
     private static LayerDefinition createLayer() {
         MeshDefinition mesh = new MeshDefinition();
-        var root = mesh.getRoot();
+        var body = mesh.getRoot().addOrReplaceChild("body", new CubeListBuilder(), PartPose.ZERO);
         CubeDeformation deformation = new CubeDeformation(0.0F);
-        root.addOrReplaceChild("left_wing",
+        body.addOrReplaceChild("left_wing",
                 CubeListBuilder.create().texOffs(0, 0)
                         .addBox(0.0F, -11.6F, 0.0F, 0.0F, 32.0F, 32.0F, deformation),
                 PartPose.offsetAndRotation(-1.5F, 0.0F, 2.0F,
                         0.0F, (float) (Math.PI * 0.4), 0.0F));
-        root.addOrReplaceChild("right_wing",
+        body.addOrReplaceChild("right_wing",
                 CubeListBuilder.create().texOffs(0, 0).mirror()
                         .addBox(0.0F, -11.6F, 0.0F, 0.0F, 32.0F, 32.0F, deformation),
                 PartPose.offsetAndRotation(1.5F, 0.0F, 2.0F,
@@ -65,26 +61,22 @@ public final class CosmicWingsLayer extends RenderLayer<AbstractClientPlayer, Pl
     public void render(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer player,
                        float limbSwing, float limbSwingAmount, float partialTicks,
                        float ageInTicks, float netHeadYaw, float headPitch) {
+        for (ItemStack stack : CuriosBridge.get().activeStacks(player, "m_xm_free")) {
+            if (DollWings.isVisible(stack)) return;
+        }
+
         ItemStack wingSource = ItemStack.EMPTY;
         for (ItemStack stack : CuriosBridge.get().activeStacks(player, "m_xm_")) {
-            if (stack.getOrDefault(ModDataComponents.COSMIC_WINGS_VISIBLE.get(), true)) {
+            if (DollWings.isVisible(stack)) {
                 wingSource = stack;
                 break;
             }
         }
         if (wingSource.isEmpty()) return;
 
-        String dyeName = wingSource.get(ModDataComponents.COSMIC_WINGS_DYE.get());
-        DyeColor dye = dyeName == null ? null : DyeColor.byName(dyeName, null);
-        int themeColor = dye == null ? 0xFFFFFF : dye.getTextColor();
+        int themeColor = DollWings.themeColor(wingSource);
 
-        ModelPart body = this.getParentModel().body;
-        leftWing.xRot = body.xRot;
-        leftWing.yRot = body.yRot + (float) (Math.PI * 0.4);
-        leftWing.zRot = body.zRot;
-        rightWing.xRot = body.xRot;
-        rightWing.yRot = body.yRot - (float) (Math.PI * 0.4);
-        rightWing.zRot = body.zRot;
+        body.copyFrom(this.getParentModel().body);
 
         CosmicWingsShaders.updateUniforms(player, themeColor);
         long time = player.level().getGameTime();
@@ -96,17 +88,14 @@ public final class CosmicWingsLayer extends RenderLayer<AbstractClientPlayer, Pl
         pose.pushPose();
         VertexConsumer base = buffers.getBuffer(CosmicWingsRenderTypes.BASE);
         int baseColor = 0xFF000000 | themeColor;
-        leftWing.render(pose, base, light, OverlayTexture.NO_OVERLAY, baseColor);
-        rightWing.render(pose, base, light, OverlayTexture.NO_OVERLAY, baseColor);
+        body.render(pose, base, light, OverlayTexture.NO_OVERLAY, baseColor);
 
         VertexConsumer cosmic = CosmicWingsShaders.wingMask.wrap(
                 buffers.getBuffer(CosmicWingsRenderTypes.COSMIC));
-        leftWing.render(pose, cosmic, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
-        rightWing.render(pose, cosmic, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+        body.render(pose, cosmic, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 
         VertexConsumer glow = buffers.getBuffer(CosmicWingsRenderTypes.GLOW);
-        leftWing.render(pose, glow, light, OverlayTexture.NO_OVERLAY, glowColor);
-        rightWing.render(pose, glow, light, OverlayTexture.NO_OVERLAY, glowColor);
+        body.render(pose, glow, light, OverlayTexture.NO_OVERLAY, glowColor);
         pose.popPose();
     }
 }

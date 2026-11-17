@@ -7,6 +7,7 @@ import github.ihatechpack.yichendoll.common.item.BudaiDollItem;
 import github.ihatechpack.yichendoll.common.item.ItemDoll;
 import github.ihatechpack.yichendoll.common.item.MeNetworkDollItem;
 import github.ihatechpack.yichendoll.common.item.MXmDollItem;
+import github.ihatechpack.yichendoll.common.item.MXmFreeDollItem;
 import github.ihatechpack.yichendoll.common.item.EnergyDollItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
@@ -52,6 +53,7 @@ public class ModItems {
         var block = ModBlocks.BLOCKS.get(doll.id()).get();
         return switch (doll.id()) {
             case "m_xm_" -> new MXmDollItem(block, doll.level());
+            case "m_xm_free" -> new MXmFreeDollItem(block, doll.level());
             case "budai" -> new BudaiDollItem(block, doll.level());
             case "budai_see_u", "yuanxi_19" -> new MeNetworkDollItem(block, doll.level());
             case "howxu", "qingjiao" -> new EnergyDollItem(block, doll.level());
