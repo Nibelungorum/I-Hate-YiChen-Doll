@@ -177,8 +177,9 @@ void main (void)
         }
     }
 
-    // apply the dye theme before lighting
-    col.rgb *= themeColor;
+    // Recolor by luminance so white and black dyes also change the visible theme.
+    float brightness = clamp(dot(col.rgb, vec3(0.299, 0.587, 0.114)), 0.0, 1.0);
+    col.rgb = themeColor * (0.85 + brightness * 0.65);
 
     // apply lighting
     vec3 shade = vertexColor.rgb * (lightmix) + vec3(1.0-lightmix,1.0-lightmix,1.0-lightmix);

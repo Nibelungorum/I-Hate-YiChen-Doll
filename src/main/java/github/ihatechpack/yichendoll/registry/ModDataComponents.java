@@ -22,9 +22,6 @@ public final class ModDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> COSMIC_WINGS_VISIBLE =
             REGISTER.register("cosmic_wings_visible", () -> DataComponentType.<Boolean>builder()
                     .persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL).build());
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> COSMIC_WINGS_DYE =
-            REGISTER.register("cosmic_wings_dye", () -> DataComponentType.<String>builder()
-                    .persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build());
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> BUDAI_SHIELD_VISIBLE =
             REGISTER.register("budai_shield_visible", () -> DataComponentType.<Boolean>builder()
                     .persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL).build());

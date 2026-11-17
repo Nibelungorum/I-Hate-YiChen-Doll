@@ -75,6 +75,10 @@ public final class CosmicWingsLayer extends RenderLayer<AbstractClientPlayer, Pl
         if (wingSource.isEmpty()) return;
 
         int themeColor = DollWings.themeColor(wingSource);
+        int red = Math.min(255, 38 + ((themeColor >> 16) & 0xFF));
+        int green = Math.min(255, 38 + ((themeColor >> 8) & 0xFF));
+        int blue = Math.min(255, 38 + (themeColor & 0xFF));
+        themeColor = (red << 16) | (green << 8) | blue;
 
         body.copyFrom(this.getParentModel().body);
 

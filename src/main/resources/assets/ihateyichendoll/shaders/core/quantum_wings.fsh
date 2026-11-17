@@ -63,7 +63,7 @@ void main()
 	float mask = textureColor.a;
 	if (mask > 0)
 	{
-		vec3 color = textureColor.rgb;
+		vec3 color = textureColor.rgb * shaderColor.rgb;
 		vec4 glintTexture = texture(Sampler1, transformGlintUV(texCoord0));
 		if (glintTexture.a > 0)
 		{
@@ -74,10 +74,7 @@ void main()
 			for (int layer = 0; layer < QuantumStarLayers; layer++)
 			{
 				vec4 starTexture = texture(Sampler2, transformStarUV(texCoord0, layer));
-				if (starTexture.a > 0)
-				{
-					color = starTexture.rgb * shaderColor.rgb;
-				}
+				color = mix(color, starTexture.rgb * shaderColor.rgb, starTexture.a);
 			}
 		}
 		fragColor = vec4(color, 1.0);

@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 /** Dyeable base and animated quantum overlay, both excluded from entity outlines. */
 public final class QuantumWingsRenderTypes {
     private static final ResourceLocation BASE_TEXTURE = Res.rl("textures/entity/quantum_wings.png");
-    private static final ResourceLocation MASK_TEXTURE = Res.rl("textures/entity/quantum_wings.png");
+    private static final ResourceLocation MASK_TEXTURE = Res.rl("textures/entity/quantum_wings_mask.png");
 
     public static final RenderType BASE = RenderType.create(
             Res.rl("quantum_wings_base").toString(), DefaultVertexFormat.NEW_ENTITY,

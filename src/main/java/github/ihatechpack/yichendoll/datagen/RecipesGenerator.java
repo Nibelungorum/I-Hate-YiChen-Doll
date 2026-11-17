@@ -2,7 +2,6 @@ package github.ihatechpack.yichendoll.datagen;
 
 import github.ihatechpack.yichendoll.IHateYiChenDoll;
 import github.ihatechpack.yichendoll.Res;
-import github.ihatechpack.yichendoll.registry.ModDataComponents;
 import github.ihatechpack.yichendoll.registry.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -14,10 +13,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -75,7 +71,6 @@ public class RecipesGenerator extends RecipeProvider {
         standardRecipe(Items.ENDER_EYE,"qingjiao");
         standardRecipe(Items.REDSTONE,"yuanxi_19");
         standardRecipe(Items.COOKED_PORKCHOP, "m_xm_");
-        wingDyeRecipes();
         standardRecipe(Items.PORKCHOP,"m_xm_free");
         standardRecipe(ModItems.ITEMS.get("howxu").get(),"budai");
         standardRecipe(Ingredient.of(ItemTags.create(ResourceLocation.parse("minecraft:flowers"))),"budai_see_u");
@@ -109,23 +104,6 @@ public class RecipesGenerator extends RecipeProvider {
         //         .define('C', Ingredient.of(ItemTags.create(ResourceLocation.parse("minecraft:planks"))))
         //         .unlockedBy("has_yuanxi_19", has(ModItems.ITEMS.get("yuanxi_19").get()))
         //         .save(p_recipeOutput, Res.rl("m_xm_"));
-    }
-
-    private void wingDyeRecipes() {
-        for (String id : new String[]{"m_xm_", "m_xm_free"}) {
-            Item doll = ModItems.ITEMS.get(id).get();
-            String recipePrefix = id.endsWith("_") ? id : id + "_";
-            for (DyeColor dye : DyeColor.values()) {
-                ItemStack result = new ItemStack(doll);
-                result.set(ModDataComponents.COSMIC_WINGS_DYE.get(), dye.getName());
-                ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result)
-                        .group(IHateYiChenDoll.MOD_ID)
-                        .requires(doll)
-                        .requires(DyeItem.byColor(dye))
-                        .unlockedBy("has_" + id, has(doll))
-                        .save(this._p_recipeOutput, Res.rl(recipePrefix + "dye_" + dye.getName()));
-            }
-        }
     }
 
     private void standardRecipe(Ingredient coreMaterial, String id) {
